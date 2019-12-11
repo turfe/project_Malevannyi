@@ -1,5 +1,5 @@
 #include <iostream>
-#include <time.h>
+#include <chrono>
 
 using namespace std;
 
@@ -37,12 +37,11 @@ void printer(struct tree_node *root, long long int depth) {
 }
 
 long long int fibonacci(long long int n) {
-    long long int aff[1000];
+    long long int aff[100000];
     aff[0] = 1;
     aff[1] = 1;
-    for (int i = 2; i < n; ++i) {
+    for (int i = 2; i < n; ++i)
         aff[i] = aff[i - 1] + aff[i - 2];
-    }
     return aff[n - 1];
 }
 
@@ -68,7 +67,8 @@ struct tree_node *create_fibonacci_tree(struct tree_node *root, int depth, long 
 }
 
 int main() {
-    time_t start = time(NULL);
+    auto start = std::chrono::system_clock::now();
+
 
     struct tree_node *fib = create_tree_node(0);
     long long int depth;
@@ -78,8 +78,13 @@ int main() {
     else cout << "Your depth is not correct" << endl;
     cout << endl;
 
-    time_t end = time(NULL);
+    auto end = std::chrono::system_clock::now();
 
-    cout << "Run time = " << end - start << "s" << endl;
+
+    chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+    cout << "finished computation at " << std::ctime(&end_time)
+         << "run time: " << elapsed_seconds.count() << " seconds" << endl;
     return 0;
 }
