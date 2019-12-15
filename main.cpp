@@ -4,6 +4,10 @@
 using namespace std;
 
 struct tree_node {
+    ~tree_node() {
+        if (left) delete(left);
+        if (right) delete(right);
+    }
     long long int value;
     struct tree_node *left;
     struct tree_node *right;
@@ -66,13 +70,14 @@ struct tree_node *create_fibonacci_tree(struct tree_node *root, int depth, long 
     }
 }
 
+
 int main() {
-    auto start = std::chrono::system_clock::now();
-
-
     struct tree_node *fib = create_tree_node(0);
     long long int depth;
     cin >> depth;
+
+    auto start = std::chrono::system_clock::now();
+
     struct tree_node *tree = create_fibonacci_tree(fib, depth, fibonacci(depth + 2));
     if (tree != NULL) printer(tree, depth);
     else cout << "Your depth is not correct" << endl;
@@ -80,9 +85,13 @@ int main() {
 
     auto end = std::chrono::system_clock::now();
 
-
     chrono::duration<double> elapsed_seconds = end-start;
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+    time_t end_time = chrono::system_clock::to_time_t(end);
+
+    //std::cout << "fib = " << fib << ", tree = " << tree << std::endl;
+    delete(fib);
+    //delete(tree);
+
 
     cout << "finished computation at " << std::ctime(&end_time)
          << "run time: " << elapsed_seconds.count() << " seconds" << endl;
