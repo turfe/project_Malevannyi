@@ -90,8 +90,6 @@ int main() {
 
     //std::cout << "fib = " << fib << ", tree = " << tree << std::endl;
     delete(fib);
-    //delete(tree);
-
 
     cout << "finished computation at " << std::ctime(&end_time)
          << "run time: " << elapsed_seconds.count() << " seconds" << endl;
